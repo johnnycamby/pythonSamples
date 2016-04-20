@@ -1,0 +1,91 @@
+
+{% extends 'base.html'%}
+{% import 'macros.html' as macros %}
+
+{% block title %}
+Weather Averages for {{ city }}
+{% endblock %}
+
+
+
+{% block page_content %}
+
+<div class="row">
+
+<div class="col-md-6">
+
+        <form method="post" action="">
+            <div class="form-group">
+                <label for="name" class="col-md-2 control-label">Yo type your name !</label>
+                <div class="col-md-6">
+                    <input type="text" name="name" id="name" placeholder="Enter name" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" name="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        </form>
+
+        {% if name %}
+        <h1>Yo {{ name }}</h1>
+        {% endif %}
+
+</div>
+
+<div class="col-md-6">
+    <h1>Weather Averages</h1>
+  <h2>{{ city }}</h2>
+
+  <table class="table table-hover">
+      <tr>
+          <th>Month</th>
+          <th>Min</th>
+          <th>Max</th>
+          <th>Rainfall</th>
+      </tr>
+      {% for month in months %}
+      <!--
+
+<tr>
+<td>{{ month }}</td>
+<td>
+{% set hl = weather[month]['min'] <= highlight['min'] %}
+    {% if hl %}<b>{% endif %}
+    {{weather[month]['min']}}
+    {% if hl %}</b>{% endif %}
+</td>
+ <td>
+    {% set hl = weather[month]['max'] >= highlight['max'] %}
+    {% if hl %}<b>{% endif %}
+    {{weather[month]['min']}}
+    {% if hl %}</b>{% endif %}
+</td>
+ <td>
+    {% set hl = weather[month]['rain'] >= highlight['rain'] %}
+    {% if hl %}<b>{% endif %}
+    {{weather[month]['min']}}
+    {% if hl %}</b>{% endif %}
+</td>
+
+</tr>
+
+
+-->
+      {{ macros.weather_row(
+          month,
+          weather[month]['min'], weather[month]['max'], weather[month]['rain'],
+          highlight['min'], highlight['max'], highlight['rain']
+      )}}
+
+      {% endfor %}
+  </table>
+</div>
+</div>
+
+
+{% endblock%}
+
+
+
